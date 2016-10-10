@@ -1,0 +1,16 @@
+<apex:component >
+    <apex:attribute name="theOrder" type="Order__c" description="The order"/>
+    <apex:outputPanel styleClass="order">
+        <h1>
+            Shopping Cart
+        </h1>    
+        <div class="empty-message">
+            <apex:outputText rendered="{!theOrder.Line_Items__r.size == 0}">
+                Your Shopping Cart is Empty
+            </apex:outputText>               
+        </div>
+        <apex:repeat value="{!theOrder.Line_Items__r}" var="lineItem">
+            <div>{!lineItem.Quantity__c} {!lineItem.Item__r.Name}</div>
+        </apex:repeat>
+    </apex:outputPanel>
+</apex:component>

@@ -1,0 +1,22 @@
+<apex:page standardController="Order__c" extensions="StoreExtension">
+    <apex:stylesheet value="{!URLFOR($Resource.fancy_styles)}"/>
+    <div class="order-summary">
+        <apex:outputPanel styleClass="header">
+            Thank you for your order, {!theOrder.Name__c}!  Here is a summary of the items in your order:
+        </apex:outputPanel>
+        <c:Cart theOrder="{!theOrder}"></c:Cart>
+        <apex:outputPanel styleClass="order">
+            <span>
+                Total: 
+            </span>
+            <apex:outputField value="{!theOrder.Total__c}"/>
+            <div>
+                <span>Order Time: </span>
+                <apex:outputField value="{!theOrder.lastModifiedDate}"/>   
+            </div>
+        </apex:outputPanel>
+        <apex:outputPanel styleClass="footer">
+            <apex:outputLink value="{!storePage}">Return to Store</apex:outputLink>
+        </apex:outputPanel>
+    </div>
+</apex:page>

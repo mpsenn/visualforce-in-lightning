@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+	<types>
+		<members>StoreExtension</members>
+		<members>StoreExtensionTest</members>
+		<name>ApexClass</name>
+	</types>
+	<types>
+		<members>Cart</members>
+		<name>ApexComponent</name>
+	</types>
+	<types>
+		<members>Checkout</members>
+		<members>OrderSummary</members>
+		<members>Store</members>
+		<members>Store_LightningOut</members>
+		<name>ApexPage</name>
+	</types>
+	<types>
+		<members>StoreDependencies</members>
+		<members>StoreItem</members>
+		<members>addToCart</members>
+		<members>svgIcon</members>
+		<name>AuraDefinitionBundle</name>
+	</types>
+	<types>
+		<members>Item__c</members>
+		<members>Line_Item__c</members>
+		<members>Order__c</members>
+		<name>CustomObject</name>
+	</types>
+	<types>
+		<members>Admin</members>
+		<members>DFVF16 Profile</members>
+		<members>Standard</members>
+		<name>Profile</name>
+	</types>
+	<types>
+		<members>fancy_scripts</members>
+		<members>fancy_styles</members>
+		<members>simple_styles</members>
+		<name>StaticResource</name>
+	</types>
+	<version>37.0</version>
+</Package>

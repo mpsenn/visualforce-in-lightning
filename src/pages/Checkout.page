@@ -1,0 +1,19 @@
+<apex:page standardController="Order__c" extensions="StoreExtension">
+    <apex:stylesheet value="{!URLFOR($Resource.fancy_styles)}"/>
+    <apex:messages />
+    <apex:form styleClass="checkout-form">
+        <div class="personal-data"><label>Name</label> <apex:inputField value="{!theOrder.Name__c}"/></div>
+        <div class="personal-data"><label>Email</label> <apex:inputField value="{!theOrder.Email__c}"/></div>
+        <c:Cart theOrder="{!theOrder}"></c:Cart>
+        <apex:outputPanel id="total">
+            <span>
+                Total: 
+            </span>
+            <apex:outputField value="{!theOrder.Total__c}"/>
+        </apex:outputPanel>
+        <apex:outputPanel layout="block" id="completeOrder">
+        	<apex:commandButton value="<< Continue Shopping" action="{!continueShopping}"/>
+            <apex:commandButton value="Complete Order" action="{!completeOrder}"/>
+	    </apex:outputPanel>
+    </apex:form>
+</apex:page>

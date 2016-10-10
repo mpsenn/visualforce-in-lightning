@@ -1,0 +1,44 @@
+<apex:page standardController="Order__c" extensions="StoreExtension">
+    <apex:stylesheet value="{!URLFOR($Resource.fancy_styles)}"/>
+    <apex:includeScript value="{!URLFOR($Resource.fancy_scripts)}"/>
+    <apex:form styleClass="store-form">
+        <div class="cart">
+          <apex:outputPanel id="toggle">
+              <apex:commandLink value="{!toggleLink}" action="{!toggleShowCart}" rerender="toggle, cart"/>
+          </apex:outputPanel>
+          <apex:outputPanel id="cart">
+              <c:Cart rendered="{!showCart}" theOrder="{!theOrder}"></c:Cart>
+          </apex:outputPanel>
+          <apex:outputPanel layout="block" id="total">
+              <span>
+                  Total: 
+              </span>
+              <apex:outputField value="{!theOrder.Total__c}"/>
+          </apex:outputPanel>
+          <apex:outputPanel layout="block" id="checkout-cart">
+              <apex:commandButton value="Proceed to Checkout" action="{!gotoCheckout}"/>
+          </apex:outputPanel>
+          <div class="cart-status">
+            <apex:actionStatus styleClass="cart-status" id="cart-status" startText="Working..." stopText=""/>
+          </div>
+        </div>
+        <div class="items-panel">
+          <apex:outputPanel id="items" styleClass="items">
+              <apex:repeat var="item" value="{!items}">
+                    <apex:outputPanel styleClass="item">
+                        <div class="item-attr name">{!item.Name}</div>
+                        <div class="item-attr desc">{!item.Description__c}</div>
+                        <div class="item-attr price">
+                            <apex:outputField styleClass="item-attr" value="{!item.Price__c}"/>
+                        </div>   
+                        <span class="add-to-cart">
+                            <apex:commandButton value="Add to Cart" action="{!addToCart}" reRender="cart, total" status="cart-status">
+                                <apex:param name="itemId" value="{!item.id}" />
+                            </apex:commandButton>
+                        </span>
+                    </apex:outputPanel>
+              </apex:repeat>
+          </apex:outputPanel>
+        </div>
+    </apex:form>
+</apex:page>

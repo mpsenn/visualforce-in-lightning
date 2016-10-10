@@ -1,0 +1,82 @@
+<apex:page standardController="Order__c" extensions="StoreExtension">
+    <apex:stylesheet value="{!URLFOR($Resource.fancy_styles)}"/>
+    <apex:includeScript value="{!URLFOR($Resource.fancy_scripts)}"/>
+    
+    <apex:form styleClass="store-form">
+        <div class="cart">
+            <apex:outputPanel id="toggle">
+                <apex:commandLink value="{!toggleLink}" action="{!toggleShowCart}" rerender="toggle, cart"/>
+            </apex:outputPanel>
+            <apex:outputPanel id="cart">
+                <c:Cart rendered="{!showCart}" theOrder="{!theOrder}"></c:Cart>
+            </apex:outputPanel>
+            <apex:outputPanel layout="block" id="total">
+                <span>
+                    Total: 
+                </span>
+                <apex:outputField value="{!theOrder.Total__c}"/>
+            </apex:outputPanel>
+            <apex:outputPanel layout="block" id="checkout-cart">
+                <apex:commandButton value="Proceed to Checkout" action="{!gotoCheckout}"/>
+            </apex:outputPanel>
+            <div class="cart-status">
+                <apex:actionStatus styleClass="cart-status" id="cart-status" startText="Working..." stopText=""/>
+            </div>
+        </div>
+        <div class="items-panel">
+            <apex:outputPanel id="items" styleClass="items" layout="block">
+                <apex:repeat var="item" value="{!items}">
+                    
+                    <div class="item-lightning-out" data-id="{!item.id}"></div>
+                    
+                </apex:repeat>
+            </apex:outputPanel>
+        </div>
+        
+        <apex:actionFunction name="serverSideAddToCart" action="{!addToCart}" reRender="cart, total" status="cart-status">
+            <apex:param name="itemId" value="itemId" />
+        </apex:actionFunction>
+        
+    </apex:form>
+    
+    <apex:includeLightning rendered="true"/>
+
+    <script>
+    
+    // Initialize Lighting Out
+    $Lightning.use("ftplatform:StoreDependencies", onLightningOutLoad);
+    
+    function onLightningOutLoad() {    
+        var products = document.getElementsByClassName("item-lightning-out");
+        
+        for (productDOM of products) {
+            
+            // Grab the ID for this product
+            productId = productDOM.getAttribute("data-id");
+            productDOM.innerHTML = "";
+            
+            // Supercharge markup to use Lightning component
+            $Lightning.createComponent(
+                "ftplatform:StoreItem",
+                {"recordId": productId},
+                productDOM,
+                emptyCallback
+            );
+        }
+        
+        $A.eventService.addHandler({
+            "event": "ftplatform:addToCart",
+            "handler": onAddToCartClicked
+        });
+    }
+    
+    function onAddToCartClicked(event) {
+        console.log("Add to Cart clicked!", event);
+        var productId = event.getParam("productId");
+        serverSideAddToCart(productId);
+    }
+    
+    function emptyCallback() {}
+    </script>
+    
+</apex:page>
